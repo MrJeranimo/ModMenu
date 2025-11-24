@@ -1,5 +1,6 @@
 ﻿using Brutal.ImGuiApi;
 using HarmonyLib;
+using KSA;
 using StarMap.API;
 
 namespace ModMenu
@@ -10,6 +11,7 @@ namespace ModMenu
         private readonly Harmony MHarmony = new Harmony("ModMenu");
         private static bool ShowWindow = true;
         public static bool MenuInjectionFailed = false;
+        
 
         [StarMapAllModsLoaded]
         public void OnAllModsLoaded()
