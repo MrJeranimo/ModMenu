@@ -3,9 +3,19 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<PackageId>ModMenu.Attributes</PackageId>
 		<Version>1.0.0</Version>
-		<Authors>Your Name</Authors>
-		<Description>Attributes for registering mods with ModMenu in Kitten Space Agency</Description>
+		<Authors>YourName</Authors>
+		<Company>YourName</Company>
+		<Description>Attributes for registering mods with ModMenu in Kitten Space Agency. Decorate your menu methods with [ModMenuEntry] to automatically register with the mod menu.</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/MrJeranimo/ModMenu</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/MrJeranimo/ModMenu</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>ksa;kitten-space-agency;modding;attributes</PackageTags>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="/" />
+	</ItemGroup>
 </Project>
