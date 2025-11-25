@@ -17,7 +17,7 @@ Add the NuGet package to your mod project:
 dotnet add package ModMenu.Attributes
 ```
 
-or in Visual Studio go to Manage NuGet Packages -> Search -> ModMenu.Attributes and install that. Once installed add the `using ModMenu;` to your Mod and add the `[ModMenuEntry("Mod Name")]` tag to which ever function you want to be called by ModMenu. If you add any ImGui code in the function, it will be drawn inside a submenu that is labeled with the `"Mod Name"` you put in the tag.
+or in Visual Studio go to Manage NuGet Packages -> Search using Github -> ModMenu.Attributes and install that. Once installed add the `using ModMenu;` to your Mod and add the `[ModMenuEntry("Mod Name")]` tag to which ever function you want to be called by ModMenu. If you add any ImGui code in the function, it will be drawn inside a submenu that is labeled with the `"Mod Name"` you put in the tag.
 
 ### Usage
 ```csharp
