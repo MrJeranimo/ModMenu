@@ -57,7 +57,7 @@ Once you have the built files, put your Mod's `.dll` and the `ModMenu.Attributes
 
 ## For Players
 
-1. Download `ModMenu.zip` from [Releases](https://github.com/yourusername/ModMenu/releases)
+1. Download `ModMenu.zip` from [Releases](https://github.com/MrJeranimo/ModMenu/releases)
 2. Extract it to `Kitten Space Agency/Content/`
 3. Launch the game via StarMap
 
