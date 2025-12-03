@@ -1,24 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
 	<RootNamespace>ModMenu</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-	<Target Name="PostBuild" AfterTargets="Build">
-		<MakeDir Directories="C:/Program Files/Kitten Space Agency/Content/"></MakeDir>
-		<Copy SourceFiles="$(TargetPath)"   DestinationFolder="C:/Program Files/Kitten Space Agency/Content/ModMenu" />
-	</Target>
-
   <ItemGroup>
 	  <PackageReference Include="Lib.Harmony" Version="2.4.2">
 		  <PrivateAssets>all</PrivateAssets>
 	  </PackageReference>
-	  <PackageReference Include="StarMap.API" Version="0.3.1">
-		  <PrivateAssets>all</PrivateAssets>
-	  </PackageReference>
+	  <PackageReference Include="StarMap.API" Version="0.3.4" />
   </ItemGroup>
 
   <ItemGroup>
