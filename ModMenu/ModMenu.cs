@@ -1,4 +1,5 @@
 ﻿using Brutal.ImGuiApi;
+using Brutal.Logging;
 using HarmonyLib;
 using KSA;
 using StarMap.API;
@@ -42,7 +43,14 @@ namespace ModMenu
                 {
                     if(ImGui.BeginMenu(mod.Name))
                     {
-                        mod.Callback();
+                        try
+                        {
+                            mod.Callback();
+                        }
+                        catch (Exception ex)
+                        {
+                            DefaultCategory.Log.Error($"ModMenu - Mod '{mod.Name}' Callback Error in Backup Window: {ex}");
+                        }
                         ImGui.EndMenu();
                     }
                 }

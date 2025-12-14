@@ -4,7 +4,6 @@
 		<PackageId>ModMenu.Attributes</PackageId>
 		<Version>1.0.1</Version>
 		<Authors>MrJeranimo</Authors>
-		<Company>MrJeranimo</Company>
 		<Description>Attributes for registering mods with ModMenu in Kitten Space Agency. Decorate your menu methods with [ModMenuEntry] to automatically register with the mod menu.</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/MrJeranimo/ModMenu</PackageProjectUrl>
