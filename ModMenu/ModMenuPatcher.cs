@@ -67,7 +67,9 @@ namespace ModMenu
 
                     if (endMenuCount == 1)
                     {
-                        codes.Insert(i + 4, new CodeInstruction(OpCodes.Call, injectMethod));
+                        // Insert ldarg.1 to load the viewport parameter, then call InjectModMenu
+                        codes.Insert(i + 4, new CodeInstruction(OpCodes.Ldarg_1));  // Load viewport
+                        codes.Insert(i + 5, new CodeInstruction(OpCodes.Call, injectMethod));
                         DefaultCategory.Log.Info($"ModMenu - Successfully injected after View menu's EndMenu at index {i + 3}");
                         injected = true;
                         break;
@@ -200,7 +202,7 @@ namespace ModMenu
         /// <summary>
         /// Creates the ImGui Menu "Mods" and each of the added Mod's SubMenus
         /// </summary>
-        private static void InjectModMenu()
+        private static void InjectModMenu(Viewport viewport)
         {
             if (!Initialized)
             {
@@ -212,6 +214,7 @@ namespace ModMenu
                 // Begins the Menu Mods
                 if (ImGui.BeginMenu("Mods", true))
                 {
+                    viewport.MenuBarInUse = true;
                     // Loops through and adds each of the Mods ImGui code to the menu
                     foreach (var mod in Mods)
                     {
