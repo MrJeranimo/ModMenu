@@ -7,7 +7,17 @@ namespace ModMenu
     /// Decorate your menu method with this attribute to automatically register with ModMenu.
     /// </summary>
     /// <example>
+    /// Basic usage:
     /// [ModMenuEntry("My Mod Name")]
+    /// public static void DrawMenu()
+    /// {
+    ///     ImGui.Text("Hello World!");
+    /// }
+    ///
+    /// With ModMenu active state tracking:
+    /// public static bool IsModMenuActive { get; set; } = false;
+    ///
+    /// [ModMenuEntry("My Mod Name", isModMenuActivePropertyName: nameof(IsModMenuActive))]
     /// public static void DrawMenu()
     /// {
     ///     ImGui.Text("Hello World!");
@@ -17,17 +27,31 @@ namespace ModMenu
     public class ModMenuEntryAttribute : Attribute
     {
         /// <summary>
-        /// The name that will appear in the Mods menu
+        /// The name to display in the Mod Menu.
         /// </summary>
         public string MenuName { get; }
 
         /// <summary>
-        /// Creates a new ModMenuEntry attribute
+        /// Optional. The name of a public static bool property or field on the same class.
+        /// ModMenu will set this to <c>true</c> while your menu is being drawn,
+        /// and <c>false</c> when it is not. Useful for knowing when ModMenu is active.
         /// </summary>
-        /// <param name="menuName">The name to display in the mod menu</param>
-        public ModMenuEntryAttribute(string menuName)
+        public string IsModMenuActivePropertyName { get; }
+
+
+        /// <summary>
+        /// The Attribute to add a ModMenu Entry
+        /// </summary>
+        /// <param name="menuName">The name to display in the Mod Menu.</param>
+        /// <param name="isModMenuActivePropertyName">
+        /// Optional. Name of a public static bool property or field on this class that ModMenu
+        /// will set to <c>true</c> while drawing your menu, and <c>false</c> otherwise.
+        /// Use <c>nameof()</c> to avoid magic strings. Example: nameof(IsModMenuActive)
+        /// </param>
+        public ModMenuEntryAttribute(string menuName, string isModMenuActivePropertyName = null)
         {
             MenuName = menuName;
+            IsModMenuActivePropertyName = isModMenuActivePropertyName;
         }
     }
 }

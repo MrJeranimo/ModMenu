@@ -28,6 +28,29 @@ public class MyMod
 }
 ```
 
+or
+
+```csharp
+using ModMenu;
+using Brutal.ImGui;
+
+public class MyMod
+{
+    public static bool _isModMenuActive { get; set; } = false;
+
+    [ModMenuEntry("My Mod Name", nameof(_isModMenuActive))]
+    public static void DrawMenu()
+    {
+        ImGui.Text("Hello from my mod!");
+        
+        if (ImGui.Button("Click Me"))
+        {
+            Console.WriteLine("Button clicked!");
+        }
+    }
+}
+```
+
 That's it! ModMenu will automatically discover and register your menu when the game starts.
 
 ## Requirements

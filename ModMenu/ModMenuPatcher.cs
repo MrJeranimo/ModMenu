@@ -16,10 +16,12 @@ namespace ModMenu
     public class ModMenuEntryAttribute : Attribute
     {
         public string MenuName { get; }
+        public string? IsModMenuActivePropertyName { get; }
 
-        public ModMenuEntryAttribute(string menuName)
+        public ModMenuEntryAttribute(string menuName, string? isModMenuActivePropertyName = null)
         {
             MenuName = menuName;
+            IsModMenuActivePropertyName = isModMenuActivePropertyName;
         }
     }
 
@@ -30,15 +32,17 @@ namespace ModMenu
         public static readonly List<ModEntry> Mods = new List<ModEntry>();
 
         // Struct to get the name of the Mod and code to be injected
-        public readonly struct ModEntry
+        public struct ModEntry
         {
             public string Name { get; }
             public Action Callback { get; }
+            public BoolRef? IsModMenuActive { get; }
 
-            public ModEntry(string name, Action callback)
+            public ModEntry(string name, Action callback, BoolRef? isModMenuActive = null)
             {
                 Name = name;
                 Callback = callback;
+                IsModMenuActive = isModMenuActive;
             }
         }
 
@@ -121,6 +125,7 @@ namespace ModMenu
                             foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic |
                                                                    BindingFlags.Static | BindingFlags.Instance))
                             {
+                                BoolRef? isModMenuActiveRef = null;
                                 string? menuName = null;
                                 bool shouldAdd = false;
 
@@ -132,6 +137,23 @@ namespace ModMenu
                                 {
                                     var menuNameProperty = attribute.GetType().GetProperty("MenuName");
                                     menuName = menuNameProperty?.GetValue(attribute) as string;
+
+                                    // Resolve the BoolRef from the declared property/field name
+                                    var isModMenuActiveName = attribute.GetType().GetProperty("IsModMenuActivePropertyName")?.GetValue(attribute) as string;
+
+                                    if (!string.IsNullOrEmpty(isModMenuActiveName))
+                                    {
+                                        var prop = type.GetProperty(isModMenuActiveName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+                                        var field = prop == null ? type.GetField(isModMenuActiveName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static) : null;
+
+                                        if (prop != null && prop.CanWrite)
+                                            isModMenuActiveRef = new BoolRef(() => (bool)prop.GetValue(null), v => prop.SetValue(null, v));
+                                        else if (field != null)
+                                            isModMenuActiveRef = new BoolRef(() => (bool)field.GetValue(null), v => field.SetValue(null, v));
+                                        else
+                                            DefaultCategory.Log.Warning($"ModMenu: Could not find or write to '{isModMenuActiveName}' on {type.FullName}");
+                                    }
+
                                     shouldAdd = true;
                                 }
                                 // Method 2: Look for naming convention (public static methods)
@@ -163,7 +185,7 @@ namespace ModMenu
                                         DefaultCategory.Log.Info($"ModMenu: Found instance method '{menuName}' in {type.FullName}.{method.Name}");
                                     }
 
-                                    Mods.Add(new ModEntry(menuName, callback));
+                                    Mods.Add(new ModEntry(menuName, callback, isModMenuActiveRef));
                                 }
                             }
                         }
@@ -207,6 +229,13 @@ namespace ModMenu
             if (!Initialized)
             {
                 Initialize();
+                foreach(var mod in Mods)
+                {
+                    if (mod.IsModMenuActive != null)
+                    {
+                        mod.IsModMenuActive.Value = true;
+                    }
+                }
             }
 
             try
