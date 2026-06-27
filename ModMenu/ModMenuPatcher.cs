@@ -101,7 +101,7 @@ namespace ModMenu
             if (Initialized) return;
             Initialized = true;
 
-            DefaultCategory.Log.Info("ModMenu: Scanning for mod menu entries...");
+            DefaultCategory.Log.Info("ModMenu - Scanning for mod menu entries...");
 
             // Scan all loaded assemblies
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
@@ -151,7 +151,7 @@ namespace ModMenu
                                         else if (field != null)
                                             isModMenuActiveRef = new BoolRef(() => (bool)field.GetValue(null), v => field.SetValue(null, v));
                                         else
-                                            DefaultCategory.Log.Warning($"ModMenu: Could not find or write to '{isModMenuActiveName}' on {type.FullName}");
+                                            DefaultCategory.Log.Warning($"ModMenu - Could not find or write to '{isModMenuActiveName}' on {type.FullName}");
                                     }
 
                                     shouldAdd = true;
@@ -176,13 +176,13 @@ namespace ModMenu
                                     if (method.IsStatic)
                                     {
                                         callback = (Action)Delegate.CreateDelegate(typeof(Action), method);
-                                        DefaultCategory.Log.Info($"ModMenu: Found static method '{menuName}' in {type.FullName}.{method.Name}");
+                                        DefaultCategory.Log.Info($"ModMenu - Found static method '{menuName}' in {type.FullName}.{method.Name}");
                                     }
                                     else
                                     {
                                         var instance = Activator.CreateInstance(type);
                                         callback = (Action)Delegate.CreateDelegate(typeof(Action), instance, method);
-                                        DefaultCategory.Log.Info($"ModMenu: Found instance method '{menuName}' in {type.FullName}.{method.Name}");
+                                        DefaultCategory.Log.Info($"ModMenu - Found instance method '{menuName}' in {type.FullName}.{method.Name}");
                                     }
 
                                     Mods.Add(new ModEntry(menuName, callback, isModMenuActiveRef));
@@ -191,19 +191,19 @@ namespace ModMenu
                         }
                         catch (Exception ex)
                         {
-                            DefaultCategory.Log.Debug($"ModMenu: Could not scan type {type.FullName}: {ex.Message}");
+                            DefaultCategory.Log.Debug($"ModMenu - Could not scan type {type.FullName}: {ex.Message}");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    DefaultCategory.Log.Debug($"ModMenu: Could not scan assembly {assembly.GetName().Name}: {ex.Message}");
+                    DefaultCategory.Log.Debug($"ModMenu - Could not scan assembly {assembly.GetName().Name}: {ex.Message}");
                 }
             }
 
             // Sort alphabetically by Mod Name
             Mods.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.OrdinalIgnoreCase));
-            DefaultCategory.Log.Info($"ModMenu: Initialized with {Mods.Count} mod(s)");
+            DefaultCategory.Log.Info($"ModMenu - Initialized with {Mods.Count} mod(s)");
         }
 
         /// <summary>
