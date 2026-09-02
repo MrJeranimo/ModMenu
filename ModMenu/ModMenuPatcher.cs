@@ -224,7 +224,7 @@ namespace ModMenu
         /// <summary>
         /// Creates the ImGui Menu "Mods" and each of the added Mod's SubMenus
         /// </summary>
-        private static void InjectModMenu(Viewport viewport)
+        private static void InjectModMenu(GameViewport viewport)
         {
             if (!Initialized)
             {
@@ -243,7 +243,7 @@ namespace ModMenu
                 // Begins the Menu Mods
                 if (ImGui.BeginMenu("Mods", true))
                 {
-                    viewport.MenuBarInUse = true;
+                    ((IGameViewportLifecycle) viewport).SetMenuBarInUse(true);
                     // Loops through and adds each of the Mods ImGui code to the menu
                     foreach (var mod in Mods)
                     {

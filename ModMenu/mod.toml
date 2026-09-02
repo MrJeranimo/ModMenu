@@ -1,6 +1,7 @@
 name="ModMenu"
-version="0.2.1"
+version="0.2.2"
 author="MrJeranimo"
+description="This is a mod that adds a \"Mods\" tab to the main KSA game next to the \"View\" tab. It also provides functionality for mods to add their own sub menus to the new \"Mods\" tab."
 
 [StarMap]
 EntryAssembly="ModMenu"
